@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RFID TAG Reader</string>
+    <string name="button">Clear</string>
+</resources>
