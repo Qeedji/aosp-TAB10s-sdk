@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">Surround Led</string>
-    <string name="radiobutton1">Red</string>
-    <string name="radiobutton2">Green</string>
-    <string name="radiobutton3">Orange</string>
-    <string name="radiobutton4">Off</string>
-</resources>
