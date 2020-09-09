@@ -57,6 +57,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        SurroundLight surroundlight = new SurroundLight(this);
+        int id = R.id.radioButton4;
+        switch (surroundlight.getColor()) {
+            case SurroundLight.RED:
+                id = R.id.radioButton1;
+                break;
+            case SurroundLight.GREEN:
+                id = R.id.radioButton2;
+                break;
+            case SurroundLight.ORANGE:
+                id = R.id.radioButton3;
+                break;
+            }
+        RadioButton button = findViewById(id);
+        button.setChecked(true);
         Log.d(TAG, "resume");
     }
 
