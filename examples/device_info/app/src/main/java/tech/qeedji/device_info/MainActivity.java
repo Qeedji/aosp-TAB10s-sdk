@@ -5,9 +5,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
 import android.content.pm.PackageManager;
 
 import android.os.Bundle;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,20 +32,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showText() {
-        TextView textView = (TextView)findViewById(R.id.textView);
-        textView.setText(null);
         String model = android.os.Build.MODEL;
+        setText(R.id.Model, model);
         String manufacturer = android.os.Build.MANUFACTURER;
-        addText(textView, "Model\t\t\t\t\t\t: " + model);
-        addText(textView, "Manufacturer\t: " + manufacturer);
-        addText(textView, "\nPSN\t\t\t\t\t\t\t: " + getPsn(getSerial()));
-        addText(textView, "\nMAC WLan\t\t\t: " + getMACAddress("wlan0"));
+        setText(R.id.Manufacturer, manufacturer);
+        setText(R.id.PSN, getPsn(getSerial()));
+        String version = android.os.Build.VERSION.BASE_OS;
+        if ((version != null) && !(version.isEmpty())) {
+            setText(R.id.Software_version, version);
+        } else {
+            deleteTableRow(R.id.Row_software_version);
+        }
         String macEth0 = getMACAddress("eth0");
         if ((macEth0 != null) && !(macEth0.isEmpty())) {
-            addText(textView, "MAC Lan\t\t\t\t: " + macEth0);
+            setText(R.id.Eth0_MAC_address, macEth0);
+        } else {
+            deleteTableRow(R.id.Row_Eth0_MAC_address);
         }
-        addText(textView, "\nDIP Switch Camera\t\t\t\t: " + getDipSwitchCamera());
-        addText(textView, "DIP Switch Microphone\t: " + getDipSwitchMicrophone());
+        setText(R.id.Wlan0_MAC_address, getMACAddress("wlan0"));
+        setText(R.id.Wpan0_MAC_address, getBluetoothAddress());
+        setText(R.id.DIP_Switch_Camera, getDipSwitchCamera());
+        setText(R.id.DIP_Switch_Microphone, getDipSwitchMicrophone());
+    }
+
+    private void setText(int id, String text){
+        TextView textView = (TextView)findViewById(id);
+        textView.setText(text);
+    }
+
+    private void deleteTableRow(int id){
+        TableLayout table = (TableLayout)findViewById(R.id.Table);
+        TableRow row = (TableRow)findViewById(id);
+        table.removeView(row);
     }
 
     private String getSerial() {
@@ -76,6 +97,24 @@ public class MainActivity extends AppCompatActivity {
                 + "-" + String.format("%05d", iOrdinalNumber);
     }
 
+    public static String getBluetoothAddress() {
+        String btAddress = null;
+        try {
+            BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
+            if (bluetooth != null) {
+                boolean isEn = bluetooth.isEnabled();
+                if (!isEn)
+                    bluetooth.enable();
+                btAddress = bluetooth.getAddress();
+                if (!isEn)
+                    bluetooth.disable();
+            }
+        } catch (Exception ignored) {
+            ignored.getMessage();
+        }
+        return btAddress;
+    }
+
     public static String getMACAddress(String interfaceName) {
         if (interfaceName == null) {
             return null;
@@ -101,14 +140,6 @@ public class MainActivity extends AppCompatActivity {
             ignored.getMessage();
         }
         return null;
-    }
-
-    private void addText(TextView textView, String text) {
-        if (textView.length() == 0) {
-            textView.setText(text);
-        } else {
-            textView.setText(textView.getText() + "\n" + text);
-        }
     }
 
     private void showPhoneStatePermission() {

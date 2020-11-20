@@ -1,24 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="none"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#FFFFFFFF"
-        android:textColorHighlight="#FFFFFFFF"
-        android:textColorHint="#FFFFFFFF"
-        android:textColorLink="#FFFFFFFF"
-        android:textSize="20sp" />
+    <TableLayout
+        android:id="@+id/Table"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="200dp"
+        android:gravity="center">
+
+        <TableRow>
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="Model"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/Model"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="Manufacturer"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/Manufacturer"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <View android:layout_height="20dip" />
+
+        <TableRow>
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="PSN"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/PSN"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row_software_version">
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="Software version"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/Software_version"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <View android:layout_height="20dip" />
+
+        <TableRow
+            android:id="@+id/Row_Eth0_MAC_address">
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="Eth0 MAC address (Ethernet)"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/Eth0_MAC_address"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="Wlan0 MAC address (WiFi)"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/Wlan0_MAC_address"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="Wpan0 MAC address (Bluetooth)"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/Wpan0_MAC_address"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <View android:layout_height="20dip" />
+
+        <TableRow>
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="DIP Switch Camera"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/DIP_Switch_Camera"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="DIP Switch Microphone"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/DIP_Switch_Microphone"
+                style="@style/TextAppearance" />
+        </TableRow>
+    </TableLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,20 +3,25 @@ package tech.qeedji.tablet.rfid_tag_reader;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import tech.qeedji.system.lib.Rfid125KHz;
 
 public class MainActivity extends AppCompatActivity implements KeyEvent.Callback {
 
-    private TextView textView;
-    private Button button;
+    private TableLayout table;
+    private TextView textType;
+    private TextView textSN;
     private String tagID = "";
     private NfcAdapter nfcAdapter;
     private Rfid125KHz rfid;
@@ -26,9 +31,10 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = findViewById(R.id.textView);
-        button = findViewById(R.id.button);
-        button.setOnClickListener(onClick);
+        table = findViewById(R.id.table);
+        table.setVisibility(View.INVISIBLE);
+        textType = findViewById(R.id.type);
+        textSN = findViewById(R.id.id);
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         rfid = new Rfid125KHz(this);
         nfcPendingIntent = PendingIntent.getActivity(this, 0,
@@ -55,36 +61,67 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         if (intent.getAction().equals(NfcAdapter.ACTION_TAG_DISCOVERED)
                 || intent.getAction().equals(NfcAdapter.ACTION_NDEF_DISCOVERED)) {
             byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
-            String tag = byteArrayToString(id);
-            addText(textView, "Nfc : " + tag);
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            String type = "NFC";
+            if ((tag != null) && (tag.getTechList().length > 0)) {
+                type = techtoType(tag.getTechList()[0]);
+            }
+            toast("NFC Tag detected");
+            textType.setText(type);
+            textSN.setText(byteArrayToString(id));
+            table.setVisibility(View.VISIBLE);
         }
     }
 
     static String byteArrayToString(byte[] array) {
         String hex = "";
         for (int i = 0; i < array.length ; i++) {
+            if(i>0)
+                hex += ":";
             hex += String.format("%02X", array[i]);
         }
         return hex;
     }
 
-    View.OnClickListener onClick = new View.OnClickListener() {
-        public void onClick(View v) {
-            textView.setText(null);
+    static String techtoType(String tech) {
+        if ("android.nfc.tech.NfcA".equals(tech))
+            return "ISO 14443-3A";
+        else if ("android.nfc.tech.NfcB".equals(tech))
+            return "ISO 14443-3B";
+        else if ("android.nfc.tech.IsoDep".equals(tech))
+            return "ISO DEP";
+        else if ("android.nfc.tech.NfcF".equals(tech))
+            return "JIS 6319-4";
+        else if ("android.nfc.tech.NfcV".equals(tech))
+            return "ISO 15693";
+        else if ("android.nfc.tech.Ndef".equals(tech))
+            return "NFC Forum Type 1, 2, 3 or 4";
+        return "NFC";
+    }
+
+    static String idtoSN(String id) {
+        int len = id.length();
+        String sn = "";
+        for (int i=0; i<len; i++) {
+            if(i>0 && ((i%2)==0))
+                sn += ":";
+            sn += id.charAt(i);
         }
-    };
+        return sn;
+    }
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         boolean isRfidDevice = "rfid".equals(event.getDevice().getName());
         if (isRfidDevice && isKeyboardWedgeKey(keyCode)) {
             tagID = tagID + KeyEvent.keyCodeToString(keyCode).substring(8);
-            button.setOnClickListener(null);
             return true;
         } else if (isRfidDevice && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-            addText(textView, "Rfid125KHz : " + tagID);
+            toast("RFID 125KHz Tag detected");
+            textType.setText("RFID 125KHz");
+            textSN.setText(idtoSN(tagID));
+            table.setVisibility(View.VISIBLE);
             tagID = "";
-            button.setOnClickListener(onClick);
             return true;
         }
         return super.onKeyUp(keyCode, event);
@@ -113,11 +150,22 @@ public class MainActivity extends AppCompatActivity implements KeyEvent.Callback
         return false;
     }
 
-    private void addText(TextView textView, String text) {
-        if (textView.length() == 0) {
-            textView.setText(text);
-        } else {
-            textView.setText(textView.getText() + "\n" + text);
+    private void toast(final CharSequence text) {
+        ToastCountDownTimer c = new ToastCountDownTimer(getApplicationContext(), text);
+        c.start();
+    }
+
+    class ToastCountDownTimer extends CountDownTimer {
+        private Toast mToast = null;
+        public ToastCountDownTimer(Context context, CharSequence text) {
+            super(1000,500);
+            mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+            mToast.show();
+        }
+        public void onTick(long millisUntilFinished) {
+        }
+        public void onFinish() {
+            mToast.cancel();
         }
     }
 }

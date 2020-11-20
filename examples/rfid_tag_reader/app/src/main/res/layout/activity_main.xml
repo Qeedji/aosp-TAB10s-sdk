@@ -7,40 +7,35 @@
     android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="none"
-        android:textAlignment="center"
-        android:textColor="#FFFFFFFF"
-        android:textColorHighlight="#FFFFFFFF"
-        android:textColorHint="#FFFFFFFF"
-        android:textColorLink="#FFFFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <TableLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="300dp"
+        android:gravity="center"
+        android:visibility="invisible">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="747dp"
-        android:layout_marginTop="98dp"
-        android:layout_marginEnd="127dp"
-        android:layout_marginBottom="455dp"
-        android:background="@drawable/button"
-        android:text="@string/button"
-        android:textColor="#FFFFFFFF"
-        android:textColorHighlight="#FFFFFFFF"
-        android:textColorHint="#FFFFFFFF"
-        android:textColorLink="#FFFFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TableRow>
+
+            <TextView
+                style="@style/TextAppearance"
+                android:paddingRight="20dip"
+                android:text="Tag type" />
+
+            <TextView
+                android:id="@+id/type"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:paddingRight="20dip"
+                android:text="Tag ID"
+                style="@style/TextAppearance" />
+            <TextView
+                android:id="@+id/id"
+                style="@style/TextAppearance" />
+        </TableRow>
+    </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
