@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<style>
+	body {
+		background-color: black;
+	}
+	* {
+		color: white;
+	}
+	table {
+		margin-left: auto;
+		margin-right: auto;
+		width: 80%;
+		font-size: 20px;
+		padding: 150px;
+	}
+	#snackbar {
+		visibility: hidden;
+		min-width: 250px;
+		margin-left: -125px;
+		background-color: grey;
+		text-align: center;
+		border-radius: 20px;
+		padding: 16px;
+		position: fixed;
+		z-index: 1;
+		left: 50%;
+		bottom: 30px;
+		font-size: 17px;
+	}
+	#snackbar.show {
+		visibility: visible;
+		-webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+		animation: fadein 0.5s, fadeout 0.5s 2.5s;
+	}
+	@-webkit-keyframes fadein {
+		from {bottom: 0; opacity: 0;} 
+		to {bottom: 30px; opacity: 1;}
+	}
+	@keyframes fadein {
+		from {bottom: 0; opacity: 0;}
+		to {bottom: 30px; opacity: 1;}
+	}
+	@-webkit-keyframes fadeout {
+		from {bottom: 30px; opacity: 1;} 
+		to {bottom: 0; opacity: 0;}
+	}
+	@keyframes fadeout {
+		from {bottom: 30px; opacity: 1;}
+		to {bottom: 0; opacity: 0;}
+	}
+	</style>
+	<script>
+		var tagID = "";
+		function load() {
+			Host.Rfid125KHz().start();
+			Host.NFC().start();
+		}
+		function unload() {
+			Host.Rfid125KHz().stop();
+			Host.NFC().stop();
+		}
+		function onHostNFCReading(type, sn) {
+			showSnackbar("NFC Tag detected");
+			document.getElementById("Title_Tag_Type").innerHTML = "Tag Type";
+			document.getElementById("Tag_Type").innerHTML = type;
+			document.getElementById("Title_Serial_number").innerHTML = "Tag ID";
+			document.getElementById("Serial_number").innerHTML = sn;
+		}
+		function keypress(event) {
+			if (event.charCode == 13) {
+				showSnackbar("RFID 125KHz Tag detected");
+				document.getElementById("Title_Tag_Type").innerHTML = "Tag Type";
+				document.getElementById("Tag_Type").innerHTML = "RFID 125KHz";
+				document.getElementById("Title_Serial_number").innerHTML = "Tag ID";
+				document.getElementById("Serial_number").innerHTML = idtoSN(tagID);
+				tagID = "";
+			} else {
+				tagID += String.fromCharCode(event.charCode);
+			}
+		}
+		function idtoSN(id) {
+			var _sn = "";
+			for (let i = 0; i < id.length; i++) {
+				if(i>0 && ((i%2)==0))
+					_sn += ":";
+				_sn += id[i];
+			}
+			return _sn.toUpperCase();
+		}
+		function showSnackbar(text) {
+			var x = document.getElementById("snackbar");
+			document.getElementById("snackbar").innerHTML = text;
+			x.className = "show";
+			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 1000);
+		}
+	</script>
+	<body onload="load()" onUnload="unload()" onkeypress="keypress(event)">
+		<h1>RFID TAG Reader</h1>
+		<table>
+			<tr>
+				<td id="Title_Tag_Type"></td>
+				<td id="Tag_Type"></td>
+			</tr>
+			<tr>
+				<td id="Title_Serial_number"></td>
+				<td id="Serial_number"></td>
+			</tr>
+		</table>
+		<div id="snackbar"></div>
+	</body>
+</html>

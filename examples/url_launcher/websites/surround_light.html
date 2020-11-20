@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<style>
+	body {
+		background-color: black;
+	}
+	* {
+		color: white;
+	}
+	input {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+
+		border-radius: 50%;
+		width: 16px;
+		height: 16px;
+
+		border: 2px solid white;
+		transition: 0.2s all linear;
+		margin-right: 20px;
+		
+		margin-bottom: 6px;
+	}
+	input:checked {
+		background-color: white;
+		border: 6px solid transparent;
+	}
+	div {
+		margin-left: auto;
+		margin-right: auto;
+		width: 30%;
+		border-radius: 10px;
+		margin-bottom: 30px;
+	}
+	#div_red {
+		background: linear-gradient(45deg, rgba(255,0,0,.5), rgba(255,0,0,.1));
+	}
+	#div_green {
+		background: linear-gradient(45deg, rgba(0,255,0,.5), rgba(0,255,0,.1));
+	}
+	#div_orange {
+		background: linear-gradient(45deg, rgba(255,165,0,.5), rgba(255,165,0,.1));
+	}
+	#div_off {
+		background: linear-gradient(45deg, rgba(187,187,187,.5), rgba(187,187,0,.1));
+	}
+	label {
+		font-size: 50px;
+	}
+	</style>
+	<script>
+		function load() {
+			var color = Host.SurroundLight().getColor();
+			if (color == Host.SurroundLight().RED()) {
+				document.getElementById("red").checked = true;
+			} else if (color == Host.SurroundLight().GREEN()) {
+				document.getElementById("green").checked = true;
+			} else if (color == Host.SurroundLight().ORANGE()) {
+				document.getElementById("orange").checked = true;
+			} else {
+				document.getElementById("off").checked = true;
+			}
+			document.getElementById("red").addEventListener('click', function (event) {
+				Host.SurroundLight().setColor(Host.SurroundLight().RED());
+			});
+			document.getElementById("green").addEventListener('click', function (event) {
+				Host.SurroundLight().setColor(Host.SurroundLight().GREEN());
+			});
+			document.getElementById("orange").addEventListener('click', function (event) {
+				Host.SurroundLight().setColor(Host.SurroundLight().ORANGE());
+			});
+			document.getElementById("off").addEventListener('click', function (event) {
+				Host.SurroundLight().setColor(Host.SurroundLight().OFF());
+			});
+		}
+	</script>
+	<body onload="load()">
+		<h1>Surround Light</h1>
+		<div id="div_red">
+			<input type="radio" id="red" name="surround_light" value="red">
+			<label style="color:red" for="red">Red</label>
+		</div>
+		<div id="div_green">
+			<input type="radio" id="green" name="surround_light" value="green">
+			<label style="color:green" for="green">Green</label>
+		</div>
+		<div id="div_orange">
+			<input type="radio" id="orange" name="surround_light" value="orange">
+			<label style="color:orange" for="orange">Orange</label>
+		</div>
+		<div id="div_off">
+			<input type="radio" id="off" name="surround_light" value="off">
+			<label style="color:black" for="off">Off</label>
+		</div>
+	</body>
+</html>

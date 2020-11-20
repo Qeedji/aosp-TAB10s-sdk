@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<style>
+	body {
+		background-color: black;
+	}
+	* {
+		color: white;
+	}
+	table {
+		margin-left: auto;
+		margin-right: auto;
+		width: 50%;
+	}
+	</style>
+	<script>
+		function load() {
+			document.getElementById("Model").innerHTML = Host.Device().getModel();
+			document.getElementById("Manufacturer").innerHTML = Host.Device().getManufacturer();
+			document.getElementById("PSN").innerHTML = Host.Device().getPsn();
+			document.getElementById("Software_version").innerHTML = Host.Device().getSoftwareVersion();
+			var refTable = document.getElementById("refTable");
+			var networkInterfaces = Host.NetworkInterfaces();
+			for (let i = 0; i < networkInterfaces.length(); i++) {
+				var networkInterface = networkInterfaces.get(i);
+				var row = refTable.insertRow(4 + i);
+				var networkInterfaceName = networkInterface.getName();
+				row.insertCell(0).innerHTML = networkInterfaceName.charAt(0).toUpperCase() + networkInterfaceName.slice(1) + " MAC address";
+				row.insertCell(1).innerHTML = networkInterface.getHardwareAddress();
+				if (networkInterface.isUp())
+					row.insertCell(2).innerHTML = "up";
+				else
+					row.insertCell(2).innerHTML = "down";
+			}
+			document.getElementById("Bluetooth_address").innerHTML = Host.Bluetooth().getHardwareAddress();
+			if (Host.DipSwitch().getCamera())
+				document.getElementById("DIP_Switch_Camera").innerHTML = "on";
+			else
+				document.getElementById("DIP_Switch_Camera").innerHTML = "off";
+			if (Host.DipSwitch().getMicrophone())
+				document.getElementById("DIP_Switch_Microphone").innerHTML = "on";
+			else
+				document.getElementById("DIP_Switch_Microphone").innerHTML = "off";						
+		}
+	</script>
+	<body onload="load()">
+		<h1>Device Info</h1>
+		<table id="refTable">
+			<tr>
+				<td>Model</td>
+				<td id="Model"></td>
+			</tr>
+			<tr>
+				<td>Manufacturer</td>
+				<td id="Manufacturer"></td>
+			</tr>
+			<tr>
+				<td>PSN</td>
+				<td id="PSN"></td>
+			</tr>
+			<tr>
+				<td>Software version</td>
+				<td id="Software_version"></td>
+			</tr>
+			<tr>
+				<td>Wpan0 MAC address</td>
+				<td id="Bluetooth_address"></td>
+			</tr>
+			<tr>
+				<td>DIP Switch Camera</td>
+				<td id="DIP_Switch_Camera"></td>
+			</tr>
+			<tr>
+				<td>DIP Switch Microphone</td>
+				<td id="DIP_Switch_Microphone"></td>
+			</tr>
+		</table>
+	</body>
+</html>
