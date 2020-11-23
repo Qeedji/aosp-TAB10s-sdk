@@ -19,7 +19,7 @@ public class MySharedPreferenceAPI extends SharedPreferenceAPI {
             {"tech.qeedji.url_launcher.prefs", "url", "rw", String.class, ""},
             {"tech.qeedji.url_launcher.prefs", "credential", "rw", String.class, ""},
             {"tech.qeedji.url_launcher.credential.*.prefs", "type", "rw", String.class, "HttpAuth"},
-            {"tech.qeedji.url_launcher.credential.*.prefs", "username", "wo", String.class, ""},
+            {"tech.qeedji.url_launcher.credential.*.prefs", "username", "rw", String.class, ""},
             {"tech.qeedji.url_launcher.credential.*.prefs", "password", "wo", String.class, ""},
         };
         return preferences;
