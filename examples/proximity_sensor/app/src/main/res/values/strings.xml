@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Proximity Sensor</string>
+    <string name="textview">Wait ...</string>
+</resources>
