@@ -20,15 +20,15 @@
 		function unload() {
 			Host.ProximitySensor().stop();
 		}
-		function onHostProximitySensorReading(distance) {
-			if (distance == 0)
+		function onHostProximitySensorReading(distant) {
+			if (distant == 0)
 				document.getElementById("result").innerHTML = "Hello Qeedji";
 			else
 				document.getElementById("result").innerHTML = "Nobody detected";
 		}
 	</script>
 	<body onload="load()" onUnload="unload()">
-		<h1>Presence Sensor</h1>
+		<h1>Proximity Sensor</h1>
 		<div id="result"></div>
 	</body>
 </html>
