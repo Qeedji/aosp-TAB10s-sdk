@@ -36,8 +36,8 @@
 /*------  Allows to set credential ---------*/
 //setCredential("credential1");
 
-/*------  Allows to create a credential of type HttpAuth ---------*/
-//createHttpAuthCredential("credential1", "username", "password");
+/*------  Allows to create a credential of type Native ---------*/
+//createNativeCredential("credential1", "username", "password");
 
 /** --------------------------------------
  * ---------------------------------------
@@ -84,10 +84,10 @@ function setCredential(aCredential) {
 	Android.Preferences("SharedPreferences", "tech.qeedji.url_launcher", "tech.qeedji.url_launcher.prefs").setString("credential", aCredential);
 }
 
-/* Function to create a credential of type HttpAuth */
-function createHttpAuthCredential(aCredential, aUsername, aPassword) {
+/* Function to create a credential of type native */
+function createNativeCredential(aCredential, aUsername, aPassword) {
 	var basename = "tech.qeedji.url_launcher.credential." + aCredential + ".prefs";
-	Android.Preferences("SharedPreferences", "tech.qeedji.url_launcher", basename).setString("type", "HttpAuth");
+	Android.Preferences("SharedPreferences", "tech.qeedji.url_launcher", basename).setString("type", "native");
 	Android.Preferences("SharedPreferences", "tech.qeedji.url_launcher", basename).setString("username", aUsername);
 	Android.Preferences("SharedPreferences", "tech.qeedji.url_launcher", basename).setString("password", aPassword);
 }

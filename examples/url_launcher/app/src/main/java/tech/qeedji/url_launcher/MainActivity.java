@@ -190,7 +190,8 @@ public class MainActivity extends AppCompatActivity {
             String basename = "tech.qeedji.url_launcher.credential." + credential + ".prefs";
             SharedPreferences prefs = mContext.getSharedPreferences(basename, Context.MODE_PRIVATE);
             String type = prefs.getString("type", "");
-            if ("HttpAuth".equalsIgnoreCase(type)) {
+            if ("HttpAuth".equalsIgnoreCase(type)
+                || "native".equalsIgnoreCase(type)) {
                 String[] ret = {"", ""};
                 ret[0] = prefs.getString("username", "");
                 ret[1] = prefs.getString("password", "");
