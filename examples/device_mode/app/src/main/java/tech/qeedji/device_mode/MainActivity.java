@@ -3,6 +3,10 @@ package tech.qeedji.device_mode;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +16,8 @@ import tech.qeedji.system.lib.DeviceMode;
 import tech.qeedji.system.lib.DeviceModeListener;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String ACTION_SYSTEM_BUTTON = "android.intent.action.SYSTEM_BUTTON";
 
     private Activity mActivity;
     private TextView mTextView;
@@ -58,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
                 mActivity.finish();
             }
         });
+        // Listen system button
+        BroadcastReceiver br = new MyBroadcastReceiver();
+        IntentFilter filter = new IntentFilter(ACTION_SYSTEM_BUTTON);
+        this.registerReceiver(br, filter);
     }
 
     private String intToStringDeviceMode(int value) {
@@ -67,5 +77,29 @@ public class MainActivity extends AppCompatActivity {
             return "Kiosk";
         }
         return "Invalid";
+    }
+
+    private class MyBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (ACTION_SYSTEM_BUTTON.equals(intent.getAction())) {
+                DeviceMode deviceMode = new DeviceMode(getApplicationContext());
+                if (deviceMode.getValue() == deviceMode.KIOSK) {
+                    deviceMode.setValue(deviceMode.NATIVE);
+                    sleep(2);
+                } else {
+                    deviceMode.setValue(deviceMode.KIOSK);
+                    sleep(2);
+                }
+            }
+        }
+    }
+
+    private static void sleep(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
