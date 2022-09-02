@@ -1,6 +1,3 @@
-# Start app at boot
+# Restart app after crash
 
-To start your app after the boot of the device, you can receive the [Intent.ACTION_BOOT_COMPLETED](https://developer.android.com/reference/android/content/Intent#ACTION_BOOT_COMPLETED) that is broadcast after the system finishes booting.
-When you receive this broadcast action, you can launch your activity or your service.
-
-Your manifest must authorize the [RECEIVE_BOOT_COMPLETED](https://developer.android.com/reference/android/Manifest.permission#RECEIVE_BOOT_COMPLETED).
+You can detect a crash in your app with [Thread.UncaughtExceptionHandler](https://developer.android.com/reference/java/lang/Thread.UncaughtExceptionHandler). And, you can restart your activity or your service.
