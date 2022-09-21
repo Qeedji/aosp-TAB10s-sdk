@@ -10,7 +10,7 @@
         android:id="@+id/Table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="200dp"
+        android:layout_marginHorizontal="150dp"
         android:gravity="center">
 
         <TableRow>
@@ -77,6 +77,11 @@
             <TextView
                 android:id="@+id/Eth0_MAC_address"
                 style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/Eth0_Operstate"
+                android:text="\t(Unknown)"
+                style="@style/TextAppearance" />
         </TableRow>
 
         <TableRow>
@@ -88,6 +93,11 @@
 
             <TextView
                 android:id="@+id/Wlan0_MAC_address"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/Wlan0_Operstate"
+                android:text="\t(Unknown)"
                 style="@style/TextAppearance" />
         </TableRow>
 
@@ -126,6 +136,68 @@
 
             <TextView
                 android:id="@+id/DIP_Switch_Microphone"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <View android:layout_height="20dip" />
+
+        <TableRow
+            android:id="@+id/Row_NAPOE_Title">
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="Ethernet adapter information"
+                style="@style/TextAppearance" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/Row_NAPOE_ProductName">
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="\t\tProduct name"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/NAPOE_ProductName"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row_NAPOE_Manufacturer">
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="\t\tManufacturer"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/NAPOE_Manufacturer"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row_NAPOE_PSN">
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="\t\tSerial number"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/NAPOE_PSN"
+                style="@style/TextAppearance" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row_NAPOE_Version">
+
+            <TextView
+                android:paddingRight="50dip"
+                android:text="\t\tVersion"
+                style="@style/TextAppearance" />
+
+            <TextView
+                android:id="@+id/NAPOE_Version"
                 style="@style/TextAppearance" />
         </TableRow>
     </TableLayout>
